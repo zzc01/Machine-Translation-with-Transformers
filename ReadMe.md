@@ -5,11 +5,11 @@ Here is an implmentation of the machine translator using the encoder-decoder arc
 
 1. The data set used here is the English-German sentence pair from http://www.manythings.org/anki/
 
-The data is cleaned and split into train, validation, and testing sets. The script used to clean the data is in [data_cleaning.ipynb](/Translator_Transformer/data_cleaning.ipynb). Here we removed unused column from the original data, applied canonical decomposition normalization to each sentence word, and encoded the sentence to Bytes datastructure using utf-8. 
+The data is cleaned and split into train, validation, and testing sets. The script used to clean the data is in [data_cleaning.py](/code/data_cleaning.py). Here we removed unused column from the original data, applied canonical decomposition normalization to each sentence word, and encoded the sentence to Bytes datastructure using utf-8. 
 
 2. Sub-word WordPiece tokenizer
 
-Traditional Word-based tokenizer suffers from very large vocabularies, out-of-vocailary tokens, and loss of meaning across similar words. Sub-word tokenizers solves this by decomposing rare words into smaller meaningful subwords. In [tokenizer_tf_deu_eng.ipynb](/Translator_Transformer/tokenizer_tf_deu_eng.ipynb) we first create a vocabulary list using bert_vocab.bert_vocab_from_dataset(). Next we build the tokenizer with tensorflow_text.BertTokenizer(). One tokenizer is built for german words and second tokenizer for english words. Finaly the tokenizers are saved for later use. 
+Traditional Word-based tokenizer suffers from very large vocabularies, out-of-vocailary tokens, and loss of meaning across similar words. Sub-word tokenizers solves this by decomposing rare words into smaller meaningful subwords. In [tokenizer_tf.py](/code/tokenizer_tf.py) we first create a vocabulary list using bert_vocab.bert_vocab_from_dataset(). Next we build the tokenizer with tensorflow_text.BertTokenizer(). One tokenizer is built for german words and second tokenizer for english words. Finaly the tokenizers are saved for later use. 
 
 3. Here we use the Encoder-Decoder Model with Transformer neural network for the German to English translation task. 
 
@@ -21,7 +21,7 @@ The transformer model contain different building parts, including the mulit-head
 
 6. Training the model 
 
-The transfomer model and the training of the model are both implemented in [train_tf.ipynb](/Translator_Transformer/train_tf.ipynb). Here we use an adam optimizer with custom learning rate scheduler. The masked loss is calculated using SparseCategoricalCrossentropy and padding mask.  
+The transfomer model and the training of the model are both implemented in [training.py](/code/training.py). Here we use an adam optimizer with custom learning rate scheduler. The masked loss is calculated using SparseCategoricalCrossentropy and padding mask.  
 
 7. Inference
 
@@ -36,7 +36,7 @@ Below shows the translation result and attention plot of a German sentence "Fass
 </p></pre>
 
 
-8. The model is evluated using BLEU score in [evaluate.ipynb](/Translator_Transformer/evaluate.ipynb). Below shows the BLEU score result. 
+8. The model is evluated using BLEU score in [evaluate.py](/code/evaluate.py). Below shows the BLEU score result. 
 
 The left BLEU scores are the result of scoring the prediction against the raw target sentence. The right BLEU scores are scoring the prediction against the tokenized and then detokenized raw target sentence. The reason to do the tokenized and detokenized step is to seperate the puntuations and the words. For example to convert "don't" to "don ' t", and "the end." to "the end ."
 
