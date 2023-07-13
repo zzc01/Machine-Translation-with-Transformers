@@ -1,49 +1,54 @@
-"# Machine-Translation-with-Transformers" 
+# Machine Translation with Transformers 
 
-# Machine Learning Practice Projects
-* This repository is for studying machine learning related topics and practice some projects. 
-<br/>
+Here is an implmentation of the machine translator using the encoder-decoder architecture with transformers. The translator is trained to translate German sentences to English sentences. <br/>
 
-## Installation 
-* Install python and jupyter notebook, and run under virtual enviroment.
-* Install Cuda toolkit and cuDNN 
-* Install Visual Studio Code and python extension 
-* pip install related packages: ipykernel, tensorflow, tflearn  
-<br/>
 
-## Notes
+1. The data set used here is the English-German sentence pair from http://www.manythings.org/anki/
 
-#### [Covid-19 Data Analysis and Visualization](/Covid19)
-* Collecting world-wide Covid-19 confirmed cases and death case. 
-* Analysis and visualization of the data focusing on US and Taiwan. <br/>
+The data is cleaned and split into train, validation, and testing sets. The script used to clean the data is in [data_cleaning.ipynb](/Translator_Transformer/data_cleaning.ipynb). Here we removed unused column from the original data, applied canonical decomposition normalization to each sentence word, and encoded the sentence to Bytes datastructure using utf-8. 
 
-#### [Support Vector Machine](/SupportVectorMachine)
-* Study support vector machines (SVM) classifier 
-  *  Hyperplane boundary, Lagrange primal and dual equations, soft margin, slack, and kernel trick. 
+2. Sub-word WordPiece tokenizer
+
+Traditional Word-based tokenizer suffers from very large vocabularies, out-of-vocailary tokens, and loss of meaning across similar words. Sub-word tokenizers solves this by decomposing rare words into smaller meaningful subwords. In [tokenizer_tf_deu_eng.ipynb](/Translator_Transformer/tokenizer_tf_deu_eng.ipynb) we first create a vocabulary list using bert_vocab.bert_vocab_from_dataset(). Next we build the tokenizer with tensorflow_text.BertTokenizer(). One tokenizer is built for german words and second tokenizer for english words. Finaly the tokenizers are saved for later use. 
+
+3. Here we use the Encoder-Decoder Model with Transformer neural network for the German to English translation task. 
+
+The transformer model contain different building parts, including the mulit-head attention block, encoder, decoder, and positional encoder. Here is a block diagram of the transformer [1]. 
 
 <pre><p align="center">
-<img src="https://user-images.githubusercontent.com/86133411/160174953-5c191ef5-c764-44a3-ba4f-56a0bdc9400d.png"  width="900" >
+<img src="https://github.com/zzc01/Transformer/assets/86133411/b05f651e-2c70-4d2c-a164-be27b1f89e3b"  width="300" >
 </p></pre>
 
-* Coding exercises 
-  * Use scikit-learn SVM classifier on Kaggle Breast Cancer Wisconsin (Diagnostic) Data Set
-    * Learn Seaborn library for data visualization 
-  * Build own SVM classifier 
-  * Build SVM classifier using CVXOPT for constraint optimization.  
+6. Training the model 
 
+The transfomer model and the training of the model are both implemented in [train_tf.ipynb](/Translator_Transformer/train_tf.ipynb). Here we use an adam optimizer with custom learning rate scheduler. The masked loss is calculated using SparseCategoricalCrossentropy and padding mask.  
 
-#### [Use CNN to Identify Dogs Vs Cats](/UseCNNtoIdentifyDogsVsCats)
-* Learn how to download Kaggle data set, build and train CNN models, and use the model for prediction. 
-* Here are the procedures:
+7. Inference
+
+Below shows the translation result and attention plot of a German sentence "Fass nichts an, ohne zu fragen!" to English sentence. </br>
+
+**Input:         : Fass nichts an, ohne zu fragen!</br>**
+**Prediction     : don ' t touch anything without asking .</br>**
+**Ground truth   : Don't touch anything without asking.</br>**
+
 <pre><p align="center">
-<img src="https://user-images.githubusercontent.com/86133411/157815556-905dd56b-c756-4763-b248-38632e37bc9c.png"  width="566" height="214">
+<img src="https://github.com/zzc01/Transformer/assets/86133411/dad5085a-9165-40a4-a815-bd62f89be952"  width="400" >
 </p></pre>
-<br/>
+
+
+8. The model is evluated using BLEU score in [evaluate.ipynb](/Translator_Transformer/evaluate.ipynb). Below shows the BLEU score result. 
+
+The left BLEU scores are the result of scoring the prediction against the raw target sentence. The right BLEU scores are scoring the prediction against the tokenized and then detokenized raw target sentence. The reason to do the tokenized and detokenized step is to seperate the puntuations and the words. For example to convert "don't" to "don ' t", and "the end." to "the end ."
+
+<pre><p align="center">
+<img src="https://github.com/zzc01/Transformer/assets/86133411/4d29b61e-4753-498c-939b-694859b67b5c"  width="400" >
+</p></pre>
+
+9. The code is referenced from Tensorflow Tutorials [2] and Minchine Learning Mastery [3]
+
 
 # References 
-[1] Sentdex, [Machine Learning with Python](https://www.youtube.com/c/sentdex). <br/>
-[2] Hung Yi Lee, [Machine Learning Course](https://speech.ee.ntu.edu.tw/~tlkagk/). <br/> 
-[3] Zardoua Yassir, [Support Vector Machines](https://www.youtube.com/playlist?list=PLLCGSi_WZBNeMfLavsJdhQAf9_K-0DevT). <br/>
-[4] Kaggle, [Breast Cancer Wisconsin (Diagnostic) Data Set](https://www.kaggle.com/uciml/breast-cancer-wisconsin-data). <br/>
-[5] Sanket Bose, [Feature Selection with 98.75% Accuracy](https://www.kaggle.com/code/sanketbose97/feature-selection-with-98-75-accuracy/notebook). <br/>
-
+[1] [Tensorflow Tutorials](https://www.tensorflow.org/text/tutorials) <br/>
+[2] [Machine Learning Mastery](https://machinelearningmastery.com/) <br/> 
+[3] [Attention Is All You Need](https://arxiv.org/pdf/1706.03762.pdf)<br/>
+[4] [Hugging Face](https://huggingface.co/learn/nlp-course/chapter0/1?fw=pt) <br/>
