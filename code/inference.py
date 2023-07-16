@@ -11,6 +11,7 @@ import numpy as np
 from nltk.translate.bleu_score import corpus_bleu, sentence_bleu
 import matplotlib.pyplot as plt
 import sys, os
+import logging 
 
 
 
@@ -27,9 +28,9 @@ filename = os.path.join(os.path.dirname(sys.path[0]), 'metadata', 'translator_1'
 translator = tf.saved_model.load(filename)
 
 def print_translation(sentence, tokens, ground_truth):
-    print(f'{"Input:":15s}: {sentence}')
-    print(f'{"Prediction":15s}: {tokens.numpy().decode("utf-8")}')
-    print(f'{"Ground truth":15s}: {ground_truth}')
+    logging.info(f'{"Input:":15s}: {sentence}')
+    logging.info(f'{"Prediction":15s}: {tokens.numpy().decode("utf-8")}')
+    logging.info(f'{"Ground truth":15s}: {ground_truth}')
 
 
 
@@ -39,13 +40,12 @@ def print_translation(sentence, tokens, ground_truth):
 test_data2 = np.array(test_data)
 trainX = test_data2[:, 0]
 trainY = test_data2[:, 1]
-print(len(trainX))
+logging.info(len(trainX))
 for i in range(2000, 2005):
     if i == 10: break
     sentence = trainX[i].decode('utf-8')
     ground_truth = trainY[i].decode('utf-8')
     translated_text, translated_tokens, attention_weights = translator(tf.constant(sentence))
-    print('\n')
     print_translation(sentence, translated_text, ground_truth)
 
 
@@ -81,7 +81,6 @@ def plot_attention_head(in_tokens, translated_tokens, attention):
 sentence = "Fass nichts an, ohne zu fragen!"
 ground_truth = "Don't touch anything without asking."
 translated_text, translated_tokens, attention_weights = translator(tf.constant(sentence))
-print('\n')
 print_translation(sentence, translated_text, ground_truth)
 
 head = 0
@@ -94,9 +93,8 @@ in_tokens = tf.convert_to_tensor([sentence])
 in_tokens = tokenizers.deu.tokenize(in_tokens).to_tensor()
 in_tokens = tokenizers.deu.lookup(in_tokens)[0]
 
-print('\n')
-print(in_tokens)
-print(translated_tokens)
+logging.info(in_tokens)
+logging.info(translated_tokens)
 plot_attention_head(in_tokens, translated_tokens, attention)
 
 

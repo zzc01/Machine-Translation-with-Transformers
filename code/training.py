@@ -14,7 +14,7 @@ import tensorflow_text
 from transformer_tf import Transformer
 from pickle import load, dump
 import sys, os
-
+import logging 
 
 
 
@@ -232,9 +232,9 @@ class Translator(tf.Module):
         return text, tokens, attention_weights
 
 def print_translation(sentence, tokens, ground_truth):
-    print(f'{"Input:":15s}: {sentence}')
-    print(f'{"Prediction":15s}: {tokens.numpy().decode("utf-8")}')
-    print(f'{"Ground truth":15s}: {ground_truth}')
+    logging.info(f'{"Input:":15s}: {sentence}')
+    logging.info(f'{"Prediction":15s}: {tokens.numpy().decode("utf-8")}')
+    logging.info(f'{"Ground truth":15s}: {ground_truth}')
 
 
 translator = Translator(tokenizers, transformer)

@@ -16,7 +16,7 @@ import numpy as np
 from nltk.translate.bleu_score import corpus_bleu, sentence_bleu
 import gc
 import os, sys
-
+import logging
 
 
 
@@ -31,7 +31,7 @@ reloaded_tokenizers = tf.saved_model.load(model_name)
 filename = os.path.join(os.path.dirname(sys.path[0]), 'data', 'deu-eng-test.pkl')
 with open(filename, 'rb') as file:
     test_data = load(file)
-print(f"Test Data Length = {len(test_data)}")
+logging.info(f"Test Data Length = {len(test_data)}")
 
 
 
@@ -58,7 +58,7 @@ for i, source in enumerate(test_data):
     #
     length += 1
     if length % 200 ==0:
-        print(f"Finish = {length}, Duration = {time()-time0}sec")
+        logging.info(f"Finish = {length}, Duration = {time()-time0}sec")
         del reloaded_tokenizers
         gc.collect()
         model_name = os.path.join(os.path.dirname(sys.path[0]), 'metadata', 'tokenizer_deu_eng')
