@@ -3,7 +3,7 @@
 Here we deploy the trained german-english translator onto AWS EC2 instance. Here are the instructions. 
 
 ## Launch a AWS EC2 instance
-Select Amazon Linux 2 AMI. Because loaingd the translator model requires more than 1G of memory. Therefore, select the t2.small machine which has 2G of memory. Then setup the key-pairs and IAM settings. 
+Select Amazon Linux 2 AMI. Since loading the translator model requires more than 1G of memory. Here we select the t2.small machine which has 2G of memory. Next setup the key-pairs and IAM settings. 
 
 ## Install docker
 ssh to EC2 instance. Then run the following command to install docker. 
