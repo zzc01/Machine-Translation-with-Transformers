@@ -14,10 +14,10 @@ ssh to EC2 instance. Then run the following command to install docker.
 
 ## Upload files 
 scp the following files and folder to EC2
-* app.py (the flask app)
+* [app.py](app.py) (the flask app)
 * translator/ (the trained translator model)
-* requirements.txt (the python library requirements)
-* Dockerfile (docker build script)
+* [requirements.txt](requirements.txt) (the python library requirements)
+* [Dockerfile](Dockerfile) (docker build script)
 
 ## Bring up the docker container 
 Use the following command to buid the docker image and run the container: 
