@@ -3,12 +3,12 @@
 Here we deploy the trained German-English translator onto AWS EC2 instance. Here are the instructions. 
 
 ## Create a flask app 
-flask is used to create api endpoints services. Two endpoints are created: 
-* "@app.route('/')". Use GET to access this endpoint and it will return "Hello World!"
-* "@app.route('/predict', methods=['POST'])" Use POST with the German sentence. The request will return the translated English sentence.  
+In [app.py](app.py) flask is used to create api endpoints services. Two endpoints are created: 
+* "@app.route('/')". Use GET to access this endpoint and it will return "Hello World!". 
+* "@app.route('/predict', methods=['POST'])" Use POST with a German sentence the endpoint will return the translated English sentence. 
 
 ## Launch a AWS EC2 instance
-Select Amazon Linux 2 AMI. Since loading the translator model requires more than 1G of memory. Here we select the t2.small machine which has 2G of memory. Next setup the key-pairs and IAM settings. 
+Select Amazon Linux 2 AMI. Since loading the translator model requires more than 1G of memory. Here we select the t2.small machine which has 2G of memory. In this step it requires to setup the key-pairs and IAM settings. 
 
 ## Install docker
 ssh to EC2 instance. Then run the following command to install docker. 
