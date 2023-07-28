@@ -56,11 +56,22 @@ Below shows the translation result and attention plot of a German sentence "Fass
 
 # Evaluation 
 
-The model is evluated using BLEU score in [evaluate.py](/code/evaluate.py). Below shows the BLEU score result. The BLEU scores on the left are the result of scoring the prediction against the raw target sentence. The right BLEU scores are scoring the prediction against the tokenized and then detokenized raw target sentence. The reason to do the tokenized and detokenized step is to seperate the puntuations and the words. For example to convert "don't" to "don ' t", and "the end." to "the end ."
+The model is evluated using BLEU score in [evaluate.py](/code/evaluate.py). Below shows the BLEU score result. The BLEU scores on the left are the result of scoring the prediction against the raw target sentence. The right BLEU scores are scoring the prediction against the tokenized and then detokenized raw target sentence. The reason to do the tokenized and detokenized step is to seperate the puntuations and the words. For example to convert "don't" to "don ' t", and "the end." to "the end .". This may however, result in a higher BLEU score.
 
 <pre><p align="center">
 <img src="https://github.com/zzc01/Transformer/assets/86133411/4d29b61e-4753-498c-939b-694859b67b5c"  width="400" >
 </p></pre>
+
+# Translator on the Cloud
+
+The trained German-English translator is wrapped in a flaskk app and deployed on to AWS EC2 instance using Docker container. To access the translator you can use the following code snippet from [webservice_api.ipynb](/deploy/webservice_api.ipynb)
+
+<pre><p align="center">
+<img src="https://github.com/zzc01/Machine-Translation-with-Transformers/assets/86133411/bd67aae3-b0a7-499d-b4ea-6cf8b521ed8b"  width="700" >
+</p></pre>
+
+More details of how the api endpoint is built and deployed can be found in the [deploy](/deploy) folder. To be noted the Translator service may be turned off right now because keeping the service on will accumulating the cost. The price is $0.023 USD per hour for an [t2.small](https://aws.amazon.com/ec2/instance-types/t2/) machine. 
+
 
 
 
