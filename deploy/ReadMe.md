@@ -1,6 +1,10 @@
 # Deploy the Translator on the cloud
 
-Here we deploy the trained German-English translator onto AWS EC2 instance. Here are the instructions. 
+The trained German-English translator is deployed onto AWS EC2 instance. Here is the process flow:  
+
+<pre><p align="center">
+<img src="https://github.com/zzc01/Machine-Translation-with-Transformers/assets/86133411/07703ec4-4195-4aa0-8d91-1dc93a98a8f5"  width="800" >
+</p></pre>
 
 ## Create a flask app 
 In [app.py](app.py) flask is used to create api endpoints services. Two endpoints are created: 
